@@ -30,7 +30,7 @@
 
 #include <stdio.h> /* Standard I/O functions */
 #include <stdlib.h> /* Miscellaneous functions (rand, malloc, srand)*/
-#include <math.h>
+
 /* ---------------------------------------------------------------------- */
 /* Esta funcao calcula a soma de todos os numeros primos abaixo de um dado
  * numero N, fornecido pelo usuario.
@@ -69,9 +69,10 @@ int main(void)
 
         soma = soma + a;
         n--;
+
     }
     
-    while(n); /* Repete o bloco enquanto d for diferente de zero 0 */
+    while(n); /* Repete o bloco enquanto n for diferente de zero 0 */
     
     printf("\n###########################################\n");
     printf(" SOMA DOS PRIMOS ABAIXO DE %llu VALE: %llu \n", x, soma);
