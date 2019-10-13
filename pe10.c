@@ -45,7 +45,7 @@
 
 int main(void)
 {
-    unsigned long long int a = 0, b, c, n, x, soma = 0;
+    unsigned long long a = 0, b, c, n, x, soma = 0;
    
     printf("\n###########################################\n");
     printf("\t\t SOMA DE PRIMOS ");
@@ -69,7 +69,6 @@ int main(void)
 
         soma = soma + a;
         n--;
-
     }
     
     while(n); /* Repete o bloco enquanto n for diferente de zero 0 */
