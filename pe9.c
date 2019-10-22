@@ -37,8 +37,8 @@
 
 int main(void)
 {
-     int a, b, c, sum, product, aSquared, bSquared, cSquared;
-     a = b = c = product = aSquared = bSquared = cSquared = 0;
+    int a, b, c, sum, product, aSquared, bSquared, cSquared;
+    a = b = c = product = aSquared = bSquared = cSquared = 0;
 	sum = 1000;
 	
 	for(a = 1; a < (sum/3); a++)
@@ -56,7 +56,6 @@ int main(void)
 				
 				product = a*b*c;
 				printf("%d\n", product);
-			
 			}
 		}
 	}
