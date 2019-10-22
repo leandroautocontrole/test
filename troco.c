@@ -1,7 +1,7 @@
 /***************************************************************************
- *   ex19.c                                   Version 20191009.145159      *
+ *   troco.c                                  Version 20191022.105254      *
  *                                                                         *
- *   PROGRAMA PARA APRENDIZADO DE MATEMATICA POR REPETICAO                 *
+ *   PROGRAMA PARA CALCULAR TROCO DE UMA MAQUINA DE VENDAS                 *
  *                                                                         *
  *   Copyright (C) 2019         by Leandro Dantas Lima                     *
  ***************************************************************************
@@ -31,324 +31,86 @@
 
 #include <stdio.h> /* Standard I/O functions */
 #include <stdlib.h> /* Miscellaneous functions (rand, malloc, srand)*/
-#include<time.h> /* Adicionar time(NULL) para gerar sementes srand() */
-#include<unistd.h> /* adicionar getpid() para evitar repeticoes nas sementes */
+#include<string.h>
 
 /* ---------------------------------------------------------------------- */
 /* definitions */
 
-#define LOOP 20
+
 
 /* ---------------------------------------------------------------------- */
 /* prototypes */
 
-int aleatorio(int,int);
-void iniciar_aleatorio(void);
+
 
 /* ---------------------------------------------------------------------- */
-/* Este programa cria somas de numeros aleatorios com niveis de dificuldades
- * (fases) de acordo com a evolucao do usuario, partindo de somas de dois
- * numeros com apenas um digito cada, ate soma de dois numeros com ate dois
- * digitos cada.
+/* Este programa calcula o troco de uma maquina de vendas automatica.
  * 
- * Recebe o resultado da operacao (soma) fornecido pelo usuario, avancando se
- * correta, ou dando uma mensagem de erro e repetindo a operacao, se errada.
+ * Recebe o valor do troco fornecida pelo usuario.
  *
  * Retorna EXIT_SUCCESS
  */
 
-int main(void)
-{
-    int med, desvpad, x, y, i, z, w;
-    float erradas = 0, total, corretas, percent;
-
-/* --------------------------------------------------------------------- */
-
-/* ##################################################################### */       
-/*                                NIVEL 1                                */
-/* ##################################################################### */
-
-/* --------------------------------------------------------------------- */
-
-    printf("\n\n----------------------------------------------------");
-    printf("\n APRENDIZADO DE MATEMÁTICA POR REPETICAO");
-    printf("\n----------------------------------------------------");
-    
-    printf("\n####################################################");
-    printf("\n                        NIVEL 1 ");
-    printf("\n####################################################\n");
-
-/* --------------------------------------------------------------------- */
-/* iniciando variaveis aleatorias */
-
-    iniciar_aleatorio();
-    med = 3;
-    desvpad = 2;
-    x = aleatorio(med, desvpad);  /* x entre [1,5], ou x < 6 */
-   
-    iniciar_aleatorio();
-    med = 3;
-    desvpad = 2; 
-    y = aleatorio(med, desvpad);  /* y entre [1,5], ou y < 6 */
-
-/* --------------------------------------------------------------------- */    
-
-    for(i = 1; i <= LOOP; i++)  /* inserindo n numeros com laco for */
-    {
-        x = aleatorio(med, desvpad);
-        y = aleatorio(med, desvpad);
-        z = x + y;
-    
-        printf("\n %d + %d = ", x, y);
-        scanf("%d", &w);
-
-        while(w != z)
-    
-        {
-            printf("INCORRETO!!!");
-            printf("\n %d + %d = ", x, y);
-            scanf("%d", &w);
-            erradas++;
-        }
-        printf("CORRETO!!!");
-    }
 
 
-    printf("\n\n####################################################");
-    printf("\n PARABENS, VOCE PASSOU PARA O NIVEL 2!!!");
-    printf("\n####################################################\n");
+void troco(float valor){
 
-/* ---------------------------------------------------------------------- */
+    enum{nota10,nota5,nota2};
+    enum{moeda1,moeda50,moeda25,moeda10,moeda5,moeda01};
 
-/* ##################################################################### */       
-/*                                NIVEL 2                                */
-/* ##################################################################### */
+    int quant_notas[3];
+    int quant_moedas[6];
 
-/* --------------------------------------------------------------------- */
-/* iniciando variaveis aleatorias */
+    quant_notas[nota10] = (int)valor/10;
+    valor = valor - (quant_notas[nota10]*10);
 
-    iniciar_aleatorio();
-    med = 5;
-    desvpad = 4;
-    x = aleatorio(med, desvpad);  /* x entre [1,9], ou x < 10 */
-    
-    iniciar_aleatorio();
-    med = 5;
-    desvpad = 4;
-    y = aleatorio(med, desvpad);  /* y entre [1,9], ou y < 10 */
+    quant_notas[nota5] = (int)valor/5;
+    valor = valor - (quant_notas[nota5]*5);
 
-/* --------------------------------------------------------------------- */    
-
-    for(i = 1; i <= LOOP; i++)  /* inserindo n numeros com laco for */
-    {
-        do
-    
-        {
-            x = aleatorio(med, desvpad);
-            y = aleatorio(med, desvpad);
-            z = x + y;
-        }
-        while(x + y > 10); /* gerando aleatorios enquanto a soma der maior que 10 */
-            
-        printf("\n %d + %d = ", x, y);
-        scanf("%d", &w);
-    
-        while(w != z)
-        
-        {
-            printf("INCORRETO!!!");
-            printf("\n %d + %d = ", x, y);
-            scanf("%d", &w);
-            erradas++;
-        }
-    
-        printf("CORRETO!!!");        
-    }
+    quant_notas[nota2] = (int)valor/2;
+    valor = valor - (quant_notas[nota2]*2);
 
 
-    printf("\n\n####################################################");
-    printf("\n PARABENS, VOCE PASSOU PARA O NIVEL 3!!!");
-    printf("\n####################################################\n");
+    quant_moedas[moeda1] = (int)(valor/1);
+    valor = valor - (quant_moedas[moeda1]*1);
 
-/* --------------------------------------------------------------------- */
+    quant_moedas[moeda50] = (int)(valor/0.50);
+    valor = valor - (quant_moedas[moeda50]*0.50);
 
-/* ##################################################################### */       
-/*                                NIVEL 3                                */
-/* ##################################################################### */
+    quant_moedas[moeda25] = (int)(valor/0.25);
+    valor = valor - (quant_moedas[moeda25]*0.25);
 
-/* --------------------------------------------------------------------- */
-/* iniciando variaveis aleatorias */
+    quant_moedas[moeda10] = (int)(valor/0.10);
+    valor = valor - (quant_moedas[moeda10]*0.10);
 
-    iniciar_aleatorio();
-    med = 5;
-    desvpad = 4;
-    x = aleatorio(med, desvpad);  /* x entre [1,9], ou x < 10 */
-    
-    iniciar_aleatorio();
-    med = 5;
-    desvpad = 4;
-    y = aleatorio(med, desvpad);  /* y entre [1,9], ou y < 10 */
+    quant_moedas[moeda5] = (int)(valor/0.05);
+    valor = valor - (quant_moedas[moeda5]*0.05);
 
-/* --------------------------------------------------------------------- */    
-
-    for(i = 1; i <= LOOP; i++)  /* inserindo n numeros com laco for */
-    {
-        x = aleatorio(med, desvpad);
-        y = aleatorio(med, desvpad);
-        z = x + y;
-    
-        printf("\n %d + %d = ", x, y);
-        scanf("%d", &w);
-
-        while(w != z)
-        {
-            printf("INCORRETO!!!");
-            printf("\n %d + %d = ", x, y);
-            scanf("%d", &w);
-            erradas++;
-    
-        }
-        
-        printf("CORRETO!!!");
-    
-    }
+    quant_moedas[moeda01] = (int)(valor/0.01) + 1;
+    valor = valor - (quant_moedas[moeda01]*0.01);
 
 
-    printf("\n\n####################################################");
-    printf("\n PARABENS, VOCE PASSOU PARA O NIVEL 4!!!");
-    printf("\n####################################################\n");
+    printf("\nNotas de 10,00: %d",quant_notas[nota10]);
+    printf("\nNotas de 5,00: %d",quant_notas[nota5]);
+    printf("\nNotas de 2,00: %d",quant_notas[nota2]);
 
-/* --------------------------------------------------------------------- */
+    printf("\n\nMoedas de 1,00: %d", quant_moedas[moeda1]);
+    printf("\n\nMoedas de 0,50: %d", quant_moedas[moeda50]);
+    printf("\n\nMoedas de 0,25: %d", quant_moedas[moeda25]);
+    printf("\n\nMoedas de 0,10: %d", quant_moedas[moeda10]);
+    printf("\n\nMoedas de 0,05: %d", quant_moedas[moeda5]);
+    printf("\n\nMoedas de 0,01: %d", quant_moedas[moeda01]);
+}
 
-/* ##################################################################### */       
-/*                                NIVEL 4                                */
-/* ##################################################################### */
 
-/* --------------------------------------------------------------------- */
-/* iniciando variaveis aleatorias */
+int main(){
+    float valor;
+    printf("Digite um valor: " );
+    scanf("%f", &valor);
 
-        iniciar_aleatorio();
-        med = 5;
-        desvpad = 4;
-        x = 9 +  aleatorio(med, desvpad);  /* x entre [10,18], ou 10<= x <= 18 */
-    
-        iniciar_aleatorio();
-        med = 5;
-        desvpad = 4;
-        y = aleatorio(med, desvpad);  /* y entre [1,9], ou y < 10 */
+    troco(valor);
 
-/* --------------------------------------------------------------------- */    
-
-    for(i=1; i <= LOOP; i++)  /* inserindo n numeros com laco for */
-    {
-    
-        x = 9 + aleatorio(med, desvpad);
-        y = aleatorio(med, desvpad);
-        z = x + y;
-
-        printf("\n %d + %d = ", x, y);
-        scanf("%d", &w);
-
-        while(w != z)
-        {
-            printf("INCORRETO!!!");
-            printf("\n %d + %d = ", x, y);
-            scanf("%d", &w);
-            erradas++;
-        }
-        
-        printf("CORRETO!!!");
-
-    }
-
-    printf("\n\n####################################################");
-    printf("\n PARABENS, VOCE PASSOU PARA O NIVEL 5!!!");
-    printf("\n####################################################\n");
-
-/* --------------------------------------------------------------------- */
-
-/* ##################################################################### */       
-/*                                NIVEL 5                                */
-/* ##################################################################### */
-
-/* --------------------------------------------------------------------- */
-/* iniciando variaveis aleatorias */
-
-    iniciar_aleatorio();
-    med = 26;
-    desvpad = 25;
-    x = 52 - aleatorio(med, desvpad);  /* x entre [1,50], ou x <= 50 */
-    
-    iniciar_aleatorio();
-    med = 26;
-    desvpad = 25;
-    y = 52 - aleatorio(med, desvpad);  /* y entre [1,50], ou y <= 50 */
-
-/* --------------------------------------------------------------------- */    
-
-    for(i=1; i <= LOOP; i++)  /* inserindo n numeros com laco for */
-    {
-        x = 52 - aleatorio(med, desvpad);
-        y = 52 - aleatorio(med, desvpad);
-        z = x + y;
-    
-        printf("\n %d + %d = ", x, y);
-        scanf("%d", &w);
-
-        while(w != z)
-        {
-            printf("INCORRETO!!!");
-            printf("\n %d + %d = ", x, y);
-            scanf("%d", &w);
-            erradas++;
-    
-        }
-        
-        printf("CORRETO!!!");
-    
-    }
-
-    total = LOOP*5;
-    corretas = total - erradas;
-    percent = (corretas / total);
-
-    printf("\n\n####################################################");
-    printf("\n PARABENS, VOCE CONCLUIU TODOS OS DESAFIOS!!!");
-    printf("\n####################################################\n\n");
-
-    printf("----------------------------------------------------\n");
-    printf("#####################  DESEMPENHO  #################");
-    printf("\n----------------------------------------------------\n");
-
-    printf("\n TOTAL DE QUESTOES: \t%.f", total);
-    printf("\n NUMERO DE ACERTOS: \t%.f", corretas);
-    printf("\n NUMERO DE ERROS:   \t%.f", erradas);
-    printf("\n\n----------------------------------------------------\n");
- 
-    printf("\t PERCENTUAL DE ACERTOS: \t%.2f%%", percent*100);
-    printf("\n----------------------------------------------------\n\n");
- 
-/* ---------------------------------------------------------------------- */
-    
     return EXIT_SUCCESS;
-}
-
-/* ---------------------------------------------------------------------- */
-/* funcao iniciar aleatorio */
-
-void iniciar_aleatorio(void)
-{
-    srand(time(NULL) + getpid());
-}
-
-/* ---------------------------------------------------------------------- */
-/* funcao aleatorio */
-
-int aleatorio(int med, int desvpad)
-{
-    double r;
-    r = (double) rand()/RAND_MAX;
-        return (int) ((med - desvpad) + r*(2*desvpad + 1));
 }
 
 /* ---------------------------------------------------------------------- */
