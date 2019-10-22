@@ -31,41 +31,36 @@
 /* includes */
 #include <stdio.h>
 #include <stdlib.h>
+#include<math.h>
+#include<stdint.h>
 /* ---------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------- */
 /* main function */
 
 int main(void)
 {
-    int a, b, c, sum, product, aSquared, bSquared, cSquared;
-    a = b = c = product = aSquared = bSquared = cSquared = 0;
-	sum = 1000;
+	int64_t total = 2;
+	int counter;
 	
-	for(a = 1; a < (sum/3); a++)
+	for(int i=3; i<2000000; i+=2)
 	{
-		for(b = 2; b < (sum/2); b++)
-
-        {
-			c = sum - b - a;
-			aSquared = a*a;
-			bSquared = b*b;
-			cSquared = c*c;
-			
-			if((aSquared + bSquared) == cSquared)
+		counter = 0;
+		for(int j=2; j<sqrt(i);j++)
+		{
+			if(i%j == 0)
 			{
-				printf("\n O triangulo pitagorico no qual a + b + c = 1000 tem lados: ");
-				printf("\n\n a = %d, b = %d e c = %d \n", a, b, c);
-				
-				product = a*b*c;
-				printf("\n O produto a*b*c vale: ");
-				printf("%d\n\n", product);
+				counter++;
+				break;
+			}
+		}
 		
-            }
-	
-        }
+		if(counter == 0)
+		{
+			total=total+i;
+		}
 	}
-
-    return EXIT_SUCCESS;
+	printf("\n\n **** %lld", total);
+	return EXIT_SUCCESS;
 }
 
 /* ---------------------------------------------------------------------- */
