@@ -100,6 +100,7 @@ void troco(float valor){
     printf("\n\nMoedas de 0,10: %d", quant_moedas[moeda10]);
     printf("\n\nMoedas de 0,05: %d", quant_moedas[moeda5]);
     printf("\n\nMoedas de 0,01: %d", quant_moedas[moeda01]);
+    printf("\n\n");
 }
 
 
