@@ -37,7 +37,29 @@
 
 int main(void)
 {
- 
+     int a, b, c, sum, product, aSquared, bSquared, cSquared;
+     a = b = c = product = aSquared = bSquared = cSquared = 0;
+	sum = 1000;
+	
+	for(a = 1; a < (sum/3); a++)
+	{
+		for(b = 2; b < (sum/2); b++)
+		{
+			c = sum - b - a;
+			aSquared = a*a;
+			bSquared = b*b;
+			cSquared = c*c;
+			
+			if((aSquared + bSquared) == cSquared)
+			{
+				printf("%d %d %d \n", a, b, c);
+				
+				product = a*b*c;
+				printf("%d\n", product);
+			
+			}
+		}
+	}
     return EXIT_SUCCESS;
 }
 
