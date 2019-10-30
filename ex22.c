@@ -1,7 +1,8 @@
-/**************************************************************************
+/***************************************************************************
  *   ex22.c                                   Version 20191029.144653      *
  *                                                                         *
- *   RANDOM WALKER                                                         *
+ *   RANDOM WALK (CAMINHADA ALEATORIA)                                     *
+ *                                                                         *
  *   Copyright (C) 2015-2019   Template by Ruben Carlo Benante             *
  *   Author: Leandro Dantas Lima                                           *
  ***************************************************************************
@@ -30,55 +31,117 @@
 /* ---------------------------------------------------------------------- */
 /* includes */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <unistd.h>
+#include <stdio.h> /* Standard I/O functions */
+#include <stdlib.h> /* Miscellaneous functions (rand, malloc, srand) */
+#include <time.h> /* Adicionar time(NULL) para gerar sementes srand() */
+#include <unistd.h> /* adicionar getpid() para evitar repeticoes nas sementes */
 
 /* ---------------------------------------------------------------------- */
 /* definitions */
+
 #define LOOP 100
 
 /* ---------------------------------------------------------------------- */
 /* prototypes */
-int aleatorio(int);
+
 void iniciar_aleatorio(void);
 
 /* ---------------------------------------------------------------------- */
-/* Este programa calcula o troco de uma maquina de vendas automatica.
+/* Este programa simula uma caminhada aleatoria (random walk) num plano XY
+ * de dimensao 20x20, finalizando quando atingida uma das bordas do plano e
+ * determinando o numero medio de passos para completar a caminhada.
  * 
- * Recebe o valor do troco fornecida pelo usuario.
+ * Recebe um valor aleatorio determinado pela funcao rand().
  *
  * Retorna EXIT_SUCCESS
  */
 
 /* ---------------------------------------------------------------------- */
 /* main function */
+
 int main(void)
 {
-	int x, y;
-	float med_mov;
+    clock_t tempo_inicial, tempo_final, dif_tempo; /* criando uma variavel de tipo clock_t */
+    tempo_inicial = clock()/CLOCKS_PER_SEC;
 
-	iniciar_aleatorio();
-	x = aleatorio();
+	int i, x, passos, n, s, e, w;  
+	float med_passos, c_passos = 0;
+   
+    iniciar_aleatorio();
 
-return EXIT_SUCCESS;
+    for(i = 1; i <= LOOP; i++)
+    {
+        n = 0, s = 0, e = 0, w = 0; 
+    
+        do
+        {
+            x = rand()%4;
+
+            switch(x)
+            {
+            
+                case 0: /* x = 0 --> norte */
+                    n++;
+                    printf(" Norte >>");
+                    break;
+
+                case 1: /* x = 1 --> sul*/ 
+                    s++;
+                    printf(" Sul >>");
+                    break;
+
+                case 2: /* x = 2 --> leste */
+                    e++;
+                    printf(" Leste >>");
+                    break;
+
+                case 3:  /* x = 3 --> oeste */
+                    w++;
+                    printf(" Oeste >>");
+                    break;
+            }
+
+        }while((e < 10) && (w < 10) && (n < 10) && (s < 10));
+    
+        printf("\n\n Voce andou %d passos para o NORTE\n", n);
+        printf(" Voce andou %d passos para o SUL\n", s);
+        printf(" Voce andou %d passos para o LESTE\n", e);
+        printf(" Voce andou %d passos para o OESTE\n", w);
+        printf("\n");
+        
+        passos = n + s + e + w;
+    
+        printf(" ...................................................\n");
+        printf("\tVoce andou %d passos nessa caminhada\n", passos);
+        printf(" ...................................................\n\n");
+    
+        c_passos = c_passos + passos;
+    }
+    med_passos = c_passos/LOOP;
+    
+    printf(" #######################################################################\n");
+    printf(" -----------------------------------------------------------------------\n");
+    printf(" .......................................................................\n");
+    printf("\tVoce andou em MEDIA %.1f passos para sair do seu quadrado!\n", med_passos);
+    printf(" .......................................................................\n");
+    printf(" -----------------------------------------------------------------------\n");
+    printf(" #######################################################################\n\n");
+
+    tempo_final = clock()/CLOCKS_PER_SEC;
+    dif_tempo = tempo_final - tempo_inicial;
+    printf("\t\t\t ...............................................\n");
+    printf("\t\t\t\t Tempo de execucao %f \n\n", (double)dif_tempo);
+    printf("\t\t\t ...............................................\n\n");
+    
+    return EXIT_SUCCESS;
 }
 
-
+/* ---------------------------------------------------------------------- */
 /* funcao iniciar aleatorio */
 
 void iniciar_aleatorio(void)
 {
 	srand(time(NULL) + getpid());
-}
-
-/* funcao aleatorio */
-
-void aleatorio(void)
-{
-	int r;
-	r = rand()%4;
 }
 
 /* ---------------------------------------------------------------------- */
